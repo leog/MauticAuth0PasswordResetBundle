@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  *
  * @package Mautic\FormBundle\Form\Type
  */
-class ConfigType extends AbstractType
+class Auth0Type extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -21,12 +21,12 @@ class ConfigType extends AbstractType
     {
         $builder->add(
             'auth0_management_api_token',
-            'text',
+            'textarea',
             array(
                 'label' => 'plugin.auth0.config.auth0_management_api_token',
                 'data'  => $options['data']['auth0_management_api_token'],
                 'attr'  => array(
-                    'tooltip' => 'plugin.auth0.config.auth0_management_api_token_tooltip'
+                    'tooltip' => 'plugin.auth0.config.auth0_management_api_token_tooltip',
                 )
             )
         );
