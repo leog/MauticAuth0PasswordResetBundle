@@ -30,6 +30,18 @@ class Auth0Type extends AbstractType
                 )
             )
         );
+
+        $builder->add(
+            'auth0_domain_url',
+            'text',
+            array(
+                'label' => 'plugin.auth0.config.auth0_domain_url',
+                'data'  => $options['data']['auth0_domain_url'],
+                'attr'  => array(
+                    'tooltip' => 'plugin.auth0.config.auth0_domain_url_tooltip',
+                )
+            )
+        );
     }
 
     /**

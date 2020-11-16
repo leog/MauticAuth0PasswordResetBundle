@@ -51,6 +51,10 @@ class ConfigSubscriber extends CommonSubscriber
             $values['auth0_config']['auth0_management_api_token'] = htmlspecialchars($values['auth0_config']['auth0_management_api_token']);
         }
 
+        if (!empty($values['auth0_config']['auth0_domain_url'])) {
+            $values['auth0_config']['auth0_domain_url'] = htmlspecialchars($values['auth0_config']['auth0_domain_url']);
+        }
+
         // Set updated values 
         $event->setConfig($values);
     }

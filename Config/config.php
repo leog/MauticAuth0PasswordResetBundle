@@ -21,6 +21,7 @@ return [
         ),
     ],
     'parameters' => array(
-        'auth0_management_api_token' => ''
+        'auth0_management_api_token' => '',
+        'auth0_domain_url' => ''
     )
 ];
