@@ -1,1 +1,1 @@
-# MauticAuth0Bundle
+# MauticAuth0PasswordResetBundle

@@ -1,11 +1,9 @@
 <?php
 
-namespace MauticPlugin\MauticAuth0Bundle\Form\Type;
+namespace MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  *
@@ -20,26 +18,44 @@ class Auth0Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'auth0_management_api_token',
-            'textarea',
+            'auth0_domain_url',
+            'text',
             array(
-                'label' => 'plugin.auth0.config.auth0_management_api_token',
-                'data'  => $options['data']['auth0_management_api_token'],
+                'label' => 'plugin.auth0_password_reset.config.auth0_domain_url',
+                'data'  => $options['data']['auth0_domain_url'],
                 'attr'  => array(
-                    'tooltip' => 'plugin.auth0.config.auth0_management_api_token_tooltip',
+                    'tooltip' => 'plugin.auth0_password_reset.config.auth0_domain_url_tooltip',
                 )
             )
         );
 
         $builder->add(
-            'auth0_domain_url',
+            'auth0_result_url',
             'text',
             array(
-                'label' => 'plugin.auth0.config.auth0_domain_url',
-                'data'  => $options['data']['auth0_domain_url'],
+                'label' => 'plugin.auth0_password_reset.config.auth0_result_url',
+                'data'  => $options['data']['auth0_result_url'],
                 'attr'  => array(
-                    'tooltip' => 'plugin.auth0.config.auth0_domain_url_tooltip',
+                    'tooltip' => 'plugin.auth0_password_reset.config.auth0_result_url_tooltip',
                 )
+            )
+        );
+
+        $builder->add(
+            'auth0_client_id',
+            'text',
+            array(
+                'label' => 'plugin.auth0_password_reset.config.auth0_client_id',
+                'data'  => $options['data']['auth0_client_id'],
+            )
+        );
+
+        $builder->add(
+            'auth0_client_secret',
+            'text',
+            array(
+                'label' => 'plugin.auth0_password_reset.config.auth0_client_secret',
+                'data'  => $options['data']['auth0_client_secret'],
             )
         );
     }
@@ -49,6 +65,6 @@ class Auth0Type extends AbstractType
      */
     public function getName()
     {
-        return 'auth0_config';
+        return 'auth0_password_reset_config';
     }
 }

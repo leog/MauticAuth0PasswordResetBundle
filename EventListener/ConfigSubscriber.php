@@ -1,6 +1,6 @@
 <?php
 
-namespace MauticPlugin\MauticAuth0Bundle\EventListener;
+namespace MauticPlugin\MauticAuth0PasswordResetBundle\EventListener;
 
 use Mautic\ConfigBundle\Event\ConfigEvent;
 use Mautic\CoreBundle\EventListener\CommonSubscriber;
@@ -31,9 +31,9 @@ class ConfigSubscriber extends CommonSubscriber
     {
         $event->addForm(
             array(
-                'formAlias'  => 'auth0_config',
-                'formTheme'  => 'MauticAuth0Bundle:FormTheme\Config',
-                'parameters' => $event->getParametersFromConfig('MauticAuth0Bundle')
+                'formAlias'  => 'auth0_password_reset_config',
+                'formTheme'  => 'MauticAuth0PasswordResetBundle:FormTheme\Config',
+                'parameters' => $event->getParametersFromConfig('MauticAuth0PasswordResetBundle')
             )
         );
     }
@@ -47,12 +47,20 @@ class ConfigSubscriber extends CommonSubscriber
         $values = $event->getConfig();
 
         // Manipulate the values
-        if (!empty($values['auth0_config']['auth0_management_api_token'])) {
-            $values['auth0_config']['auth0_management_api_token'] = htmlspecialchars($values['auth0_config']['auth0_management_api_token']);
+        if (!empty($values['auth0_password_reset_config']['auth0_domain_url'])) {
+            $values['auth0_password_reset_config']['auth0_domain_url'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_domain_url']);
         }
 
-        if (!empty($values['auth0_config']['auth0_domain_url'])) {
-            $values['auth0_config']['auth0_domain_url'] = htmlspecialchars($values['auth0_config']['auth0_domain_url']);
+        if (!empty($values['auth0_password_reset_config']['auth0_result_url'])) {
+            $values['auth0_password_reset_config']['auth0_result_url'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_result_url']);
+        }
+
+        if (!empty($values['auth0_password_reset_config']['auth0_client_id'])) {
+            $values['auth0_password_reset_config']['auth0_client_id'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_client_id']);
+        }
+
+        if (!empty($values['auth0_password_reset_config']['auth0_client_secret'])) {
+            $values['auth0_password_reset_config']['auth0_client_secret'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_client_secret']);
         }
 
         // Set updated values 
