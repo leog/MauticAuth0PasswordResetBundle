@@ -140,57 +140,60 @@ class EmailSubscriber extends CommonSubscriber
      */
     public function decodeTokens(EmailSendEvent $event)
     {
-        $tokens = [];
-        $lead = $event->getLead();
-        $lead_auth0_user_id = $lead["auth0userid"];
-        if(empty($this->auth0ManagementApiToken)) {
-            $this->auth0ManagementApiToken = $this->getAuth0Token();
-        }
-        $auth0DomainUrl = $this->coreParametersHelper->getParameter('auth0_domain_url');
-        $auth0ResultUrl = $this->coreParametersHelper->getParameter('auth0_result_url');
-
-        if (!empty($lead_auth0_user_id) && !empty($this->auth0ManagementApiToken) && !empty($auth0DomainUrl) && !empty($auth0ResultUrl)) {
-            $curl = curl_init();
-            $url = "https://" . $auth0DomainUrl . "/api/v2/tickets/password-change";
-            $payload = [
-                "result_url" => $auth0ResultUrl,
-                "user_id" => $lead_auth0_user_id,
-                "ttl_sec" => 0,
-                "mark_email_as_verified" => false,
-                "includeEmailInRedirect" => false
-            ];
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_POSTFIELDS => json_encode($payload),
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_HTTPHEADER => array(
-                    "authorization: Bearer " . $this->auth0ManagementApiToken,
-                    "content-type: application/json"
-                ),
-            ));
-
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-
-            curl_close($curl);
-
-            if ($err) {
-                throw new \Exception('Request to Auth0 Management API failed: ' . $err);
-            } else {
-                $data = json_decode($response, true);
-                $this->logger->debug("OK Auth0 EmailSubscriber: " . $response);
-                $content = $data["ticket"];
-                $tokens['{password_reset_ticket_url}'] = $content;
-                $event->addTokens($tokens);
+        $content = $event->getContent();
+        if (preg_match("/{password_reset_ticket_url}/", $content)) {
+            $tokens = [];
+            $lead = $event->getLead();
+            $lead_auth0_user_id = $lead["auth0userid"];
+            if(empty($this->auth0ManagementApiToken)) {
+                $this->auth0ManagementApiToken = $this->getAuth0Token();
             }
-        } else {
-            throw new \Exception('Empty required value: lead_auth0_user_id="' . $lead_auth0_user_id . '" / auth0ManagementApiToken="' . $this->auth0ManagementApiToken . '" / auth0DomainUrl="' . $auth0DomainUrl . '" / auth0ResultUrl="' . $auth0ResultUrl . '"');
+            $auth0DomainUrl = $this->coreParametersHelper->getParameter('auth0_domain_url');
+            $auth0ResultUrl = $this->coreParametersHelper->getParameter('auth0_result_url');
+
+            if (!empty($lead_auth0_user_id) && !empty($this->auth0ManagementApiToken) && !empty($auth0DomainUrl) && !empty($auth0ResultUrl)) {
+                $curl = curl_init();
+                $url = "https://" . $auth0DomainUrl . "/api/v2/tickets/password-change";
+                $payload = [
+                    "result_url" => $auth0ResultUrl,
+                    "user_id" => $lead_auth0_user_id,
+                    "ttl_sec" => 0,
+                    "mark_email_as_verified" => false,
+                    "includeEmailInRedirect" => false
+                ];
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_POSTFIELDS => json_encode($payload),
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_HTTPHEADER => array(
+                        "authorization: Bearer " . $this->auth0ManagementApiToken,
+                        "content-type: application/json"
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+                $err = curl_error($curl);
+
+                curl_close($curl);
+
+                if ($err) {
+                    throw new \Exception('Request to Auth0 Management API failed: ' . $err);
+                } else {
+                    $data = json_decode($response, true);
+                    $this->logger->debug("OK Auth0 EmailSubscriber: " . $response);
+                    $content = $data["ticket"];
+                    $tokens['{password_reset_ticket_url}'] = $content;
+                    $event->addTokens($tokens);
+                }
+            } else {
+                throw new \Exception('Empty required value: lead_auth0_user_id="' . $lead_auth0_user_id . '" / auth0ManagementApiToken="' . $this->auth0ManagementApiToken . '" / auth0DomainUrl="' . $auth0DomainUrl . '" / auth0ResultUrl="' . $auth0ResultUrl . '"');
+            }
         }
     }
 }
