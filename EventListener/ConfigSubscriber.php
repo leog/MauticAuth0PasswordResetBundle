@@ -3,14 +3,14 @@
 namespace MauticPlugin\MauticAuth0PasswordResetBundle\EventListener;
 
 use Mautic\ConfigBundle\Event\ConfigEvent;
-use Mautic\CoreBundle\EventListener\CommonSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Mautic\ConfigBundle\ConfigEvents;
 use Mautic\ConfigBundle\Event\ConfigBuilderEvent;
 
 /**
  * Class ConfigSubscriber
  */
-class ConfigSubscriber extends CommonSubscriber
+class ConfigSubscriber implements EventSubscriberInterface
 {
 
     /**
@@ -31,7 +31,7 @@ class ConfigSubscriber extends CommonSubscriber
     {
         $event->addForm(
             array(
-                'formAlias'  => 'auth0_password_reset_config',
+                'formAlias'  => 'mauticauth0passwordreset_config',
                 'formTheme'  => 'MauticAuth0PasswordResetBundle:FormTheme\Config',
                 'parameters' => $event->getParametersFromConfig('MauticAuth0PasswordResetBundle')
             )
@@ -47,20 +47,20 @@ class ConfigSubscriber extends CommonSubscriber
         $values = $event->getConfig();
 
         // Manipulate the values
-        if (!empty($values['auth0_password_reset_config']['auth0_domain_url'])) {
-            $values['auth0_password_reset_config']['auth0_domain_url'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_domain_url']);
+        if (!empty($values['mauticauth0passwordreset_config']['auth0_domain_url'])) {
+            $values['mauticauth0passwordreset_config']['auth0_domain_url'] = htmlspecialchars($values['mauticauth0passwordreset_config']['auth0_domain_url']);
         }
 
-        if (!empty($values['auth0_password_reset_config']['auth0_result_url'])) {
-            $values['auth0_password_reset_config']['auth0_result_url'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_result_url']);
+        if (!empty($values['mauticauth0passwordreset_config']['auth0_result_url'])) {
+            $values['mauticauth0passwordreset_config']['auth0_result_url'] = htmlspecialchars($values['mauticauth0passwordreset_config']['auth0_result_url']);
         }
 
-        if (!empty($values['auth0_password_reset_config']['auth0_client_id'])) {
-            $values['auth0_password_reset_config']['auth0_client_id'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_client_id']);
+        if (!empty($values['mauticauth0passwordreset_config']['auth0_client_id'])) {
+            $values['mauticauth0passwordreset_config']['auth0_client_id'] = htmlspecialchars($values['mauticauth0passwordreset_config']['auth0_client_id']);
         }
 
-        if (!empty($values['auth0_password_reset_config']['auth0_client_secret'])) {
-            $values['auth0_password_reset_config']['auth0_client_secret'] = htmlspecialchars($values['auth0_password_reset_config']['auth0_client_secret']);
+        if (!empty($values['mauticauth0passwordreset_config']['auth0_client_secret'])) {
+            $values['mauticauth0passwordreset_config']['auth0_client_secret'] = htmlspecialchars($values['mauticauth0passwordreset_config']['auth0_client_secret']);
         }
 
         // Set updated values 

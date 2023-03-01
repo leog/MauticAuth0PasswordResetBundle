@@ -6,18 +6,17 @@ return [
     'version'     => '1.0.0',
     'services' => [
         'events' => [
-            'mautic.auth0.configbundle.subscriber' => [
-                'class' => 'MauticPlugin\MauticAuth0PasswordResetBundle\EventListener\ConfigSubscriber'
+            'plugin.mauticauth0passwordreset.configbundle.subscriber' => [
+                'class' => \MauticPlugin\MauticAuth0PasswordResetBundle\EventListener\ConfigSubscriber::class
             ],
-            'mautic.auth0.emailbundle.subscriber' => [
-                'class' => 'MauticPlugin\MauticAuth0PasswordResetBundle\EventListener\EmailSubscriber',
+            'plugin.mauticauth0passwordreset.emailbundle.subscriber' => [
+                'class' => \MauticPlugin\MauticAuth0PasswordResetBundle\EventListener\EmailSubscriber::class,
                 'arguments' => ['mautic.helper.core_parameters']
             ]
         ],
         'forms'  => array(
-            'plugin.auth0_password_reset.form' => array(
-                'class' => 'MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type\Auth0Type',
-                'alias' => 'auth0_password_reset_config'
+            'plugin.mauticauth0passwordreset.form' => array(
+                'class' => \MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type\Auth0Type::class
             )
         ),
     ],

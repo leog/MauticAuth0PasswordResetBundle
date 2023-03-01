@@ -21,10 +21,10 @@ class Auth0Type extends AbstractType
             'auth0_domain_url',
             'text',
             array(
-                'label' => 'plugin.auth0_password_reset.config.auth0_domain_url',
+                'label' => 'plugin.mauticauth0passwordreset.config.auth0_domain_url',
                 'data'  => $options['data']['auth0_domain_url'],
                 'attr'  => array(
-                    'tooltip' => 'plugin.auth0_password_reset.config.auth0_domain_url_tooltip',
+                    'tooltip' => 'plugin.mauticauth0passwordreset.config.auth0_domain_url_tooltip',
                 )
             )
         );
@@ -33,10 +33,10 @@ class Auth0Type extends AbstractType
             'auth0_result_url',
             'text',
             array(
-                'label' => 'plugin.auth0_password_reset.config.auth0_result_url',
+                'label' => 'plugin.mauticauth0passwordreset.config.auth0_result_url',
                 'data'  => $options['data']['auth0_result_url'],
                 'attr'  => array(
-                    'tooltip' => 'plugin.auth0_password_reset.config.auth0_result_url_tooltip',
+                    'tooltip' => 'plugin.mauticauth0passwordreset.config.auth0_result_url_tooltip',
                 )
             )
         );
@@ -45,7 +45,7 @@ class Auth0Type extends AbstractType
             'auth0_client_id',
             'text',
             array(
-                'label' => 'plugin.auth0_password_reset.config.auth0_client_id',
+                'label' => 'plugin.mauticauth0passwordreset.config.auth0_client_id',
                 'data'  => $options['data']['auth0_client_id'],
             )
         );
@@ -54,7 +54,7 @@ class Auth0Type extends AbstractType
             'auth0_client_secret',
             'text',
             array(
-                'label' => 'plugin.auth0_password_reset.config.auth0_client_secret',
+                'label' => 'plugin.mauticauth0passwordreset.config.auth0_client_secret',
                 'data'  => $options['data']['auth0_client_secret'],
             )
         );
@@ -65,6 +65,6 @@ class Auth0Type extends AbstractType
      */
     public function getName()
     {
-        return 'auth0_password_reset_config';
+        return 'mauticauth0passwordreset_config';
     }
 }

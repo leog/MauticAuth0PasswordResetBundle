@@ -2,7 +2,7 @@
 
 namespace MauticPlugin\MauticAuth0PasswordResetBundle\EventListener;
 
-use Mautic\CoreBundle\EventListener\CommonSubscriber;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailBuilderEvent;
 use Mautic\EmailBundle\Event\EmailSendEvent;
@@ -13,7 +13,7 @@ use Mautic\CoreBundle\Helper\CoreParametersHelper;
 /**
  * Class EmailSubscriber
  */
-class EmailSubscriber extends CommonSubscriber
+class EmailSubscriber implements EventSubscriberInterface
 {
     /**
      * @var CoreParametersHelper
@@ -48,7 +48,7 @@ class EmailSubscriber extends CommonSubscriber
     {
         // register tokens
         $tokens = [
-            '{password_reset_ticket_url}' => $this->translator->trans('plugin.auth0_password_reset.password_reset_ticket_url.token'),
+            '{password_reset_ticket_url}' => $this->translator->trans('plugin.mauticauth0passwordreset.password_reset_ticket_url.token'),
         ];
 
         if ($event->tokensRequested($tokens)) {
@@ -86,9 +86,9 @@ class EmailSubscriber extends CommonSubscriber
     {
         $curl = curl_init();
 
-        $auth0DomainUrl = $this->coreParametersHelper->getParameter('auth0_domain_url');
-        $auth0ClientId = $this->coreParametersHelper->getParameter('auth0_client_id');
-        $auth0ClientSecret = $this->coreParametersHelper->getParameter('auth0_client_secret');
+        $auth0DomainUrl = $this->coreParametersHelper->get('auth0_domain_url');
+        $auth0ClientId = $this->coreParametersHelper->get('auth0_client_id');
+        $auth0ClientSecret = $this->coreParametersHelper->get('auth0_client_secret');
 
         $payload = [
             "grant_type" => 'client_credentials',
@@ -148,8 +148,8 @@ class EmailSubscriber extends CommonSubscriber
             if(empty($this->auth0ManagementApiToken)) {
                 $this->auth0ManagementApiToken = $this->getAuth0Token();
             }
-            $auth0DomainUrl = $this->coreParametersHelper->getParameter('auth0_domain_url');
-            $auth0ResultUrl = $this->coreParametersHelper->getParameter('auth0_result_url');
+            $auth0DomainUrl = $this->coreParametersHelper->get('auth0_domain_url');
+            $auth0ResultUrl = $this->coreParametersHelper->get('auth0_result_url');
 
             if (!empty($lead_auth0_user_id) && !empty($this->auth0ManagementApiToken) && !empty($auth0DomainUrl) && !empty($auth0ResultUrl)) {
                 $curl = curl_init();
