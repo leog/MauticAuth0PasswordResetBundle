@@ -6,6 +6,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailBuilderEvent;
 use Mautic\EmailBundle\Event\EmailSendEvent;
+use Symfony\Component\Translation\TranslatorInterface;
+use Monolog\Logger;
 
 use Http\Client\HttpClient;
 use Mautic\CoreBundle\Helper\CoreParametersHelper;
@@ -20,10 +22,18 @@ class EmailSubscriber implements EventSubscriberInterface
      */
     protected $coreParametersHelper;
     protected $auth0ManagementApiToken;
+    protected $logger;
 
-    public function __construct(CoreParametersHelper $coreParametersHelper)
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    public function __construct(Logger $logger, TranslatorInterface $translator, CoreParametersHelper $coreParametersHelper)
     {
+        $this->logger               = $logger;
         $this->coreParametersHelper = $coreParametersHelper;
+        $this->translator           = $translator;
     }
 
     /**

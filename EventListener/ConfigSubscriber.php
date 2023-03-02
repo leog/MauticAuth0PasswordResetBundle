@@ -3,9 +3,10 @@
 namespace MauticPlugin\MauticAuth0PasswordResetBundle\EventListener;
 
 use Mautic\ConfigBundle\Event\ConfigEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Mautic\ConfigBundle\ConfigEvents;
 use Mautic\ConfigBundle\Event\ConfigBuilderEvent;
+use MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type\ConfigType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Class ConfigSubscriber
@@ -33,6 +34,7 @@ class ConfigSubscriber implements EventSubscriberInterface
             array(
                 'formAlias'  => 'mauticauth0passwordreset_config',
                 'formTheme'  => 'MauticAuth0PasswordResetBundle:FormTheme\Config',
+                'formType'   => ConfigType::class,
                 'parameters' => $event->getParametersFromConfig('MauticAuth0PasswordResetBundle')
             )
         );

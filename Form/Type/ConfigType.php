@@ -4,12 +4,13 @@ namespace MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  *
  * @package Mautic\FormBundle\Form\Type
  */
-class Auth0Type extends AbstractType
+class ConfigType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -19,7 +20,7 @@ class Auth0Type extends AbstractType
     {
         $builder->add(
             'auth0_domain_url',
-            'text',
+            TextType::class,
             array(
                 'label' => 'plugin.mauticauth0passwordreset.config.auth0_domain_url',
                 'data'  => $options['data']['auth0_domain_url'],
@@ -31,7 +32,7 @@ class Auth0Type extends AbstractType
 
         $builder->add(
             'auth0_result_url',
-            'text',
+            TextType::class,
             array(
                 'label' => 'plugin.mauticauth0passwordreset.config.auth0_result_url',
                 'data'  => $options['data']['auth0_result_url'],
@@ -43,7 +44,7 @@ class Auth0Type extends AbstractType
 
         $builder->add(
             'auth0_client_id',
-            'text',
+            TextType::class,
             array(
                 'label' => 'plugin.mauticauth0passwordreset.config.auth0_client_id',
                 'data'  => $options['data']['auth0_client_id'],
@@ -52,7 +53,7 @@ class Auth0Type extends AbstractType
 
         $builder->add(
             'auth0_client_secret',
-            'text',
+            TextType::class,
             array(
                 'label' => 'plugin.mauticauth0passwordreset.config.auth0_client_secret',
                 'data'  => $options['data']['auth0_client_secret'],

@@ -11,14 +11,18 @@ return [
             ],
             'plugin.mauticauth0passwordreset.emailbundle.subscriber' => [
                 'class' => \MauticPlugin\MauticAuth0PasswordResetBundle\EventListener\EmailSubscriber::class,
-                'arguments' => ['mautic.helper.core_parameters']
+                'arguments' => [
+                    'logger',
+                    'translator',
+                    'mautic.helper.core_parameters'
+                ]
             ]
         ],
-        'forms'  => array(
-            'plugin.mauticauth0passwordreset.form' => array(
-                'class' => \MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type\Auth0Type::class
-            )
-        ),
+        'forms'  => [
+            'plugin.mauticauth0passwordreset.form' => [
+                'class' => 'MauticPlugin\MauticAuth0PasswordResetBundle\Form\Type\ConfigType'
+            ],
+        ],
     ],
     'parameters' => array(
         'auth0_domain_url' => '',

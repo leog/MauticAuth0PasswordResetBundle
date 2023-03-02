@@ -2,7 +2,7 @@
 
 ?>
 
-<div class="panel panel-warning">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title"><?php echo $view['translator']->trans('mautic.config.tab.mauticauth0passwordreset_config'); ?></h3>
     </div>
